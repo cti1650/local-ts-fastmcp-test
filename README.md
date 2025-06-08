@@ -1,8 +1,8 @@
-# Local MCP Test
+# Local TypeScript FastMCP Test
 
 ## このリポジトリについて
 
-ローカル環境でMCPサーバーを構築する検証のためのリポジトリ
+ローカル環境でMCPサーバーをTypeScriptのFastMCPで構築する検証のためのリポジトリ
 
 ## 初期設定
 
@@ -14,14 +14,14 @@ On Windows: `%APPDATA%/Claude/claude_desktop_config.json`
 ```json:claude_desktop_config.json
 {
   "mcpServers": {
-    "local-mcp-test": {
+    "local-ts-fastmcp-test": {
       "command": "npx",
-      "args": ["github:cti1650/local-mcp-test"]
+      "args": ["github:cti1650/local-ts-fastmcp-test"]
     }
   }
 }
 ```
 
 ## 参考サイト
-
+- [GitHub punkpeye/fastmcp](https://github.com/punkpeye/fastmcp)
 - [簡易な自作MCPサーバーをお試しで実装する方法](https://zenn.dev/smartround_dev/articles/02af1058e9f80f)

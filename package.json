@@ -1,11 +1,11 @@
 {
-  "name": "local-mcp-test",
+  "name": "local-ts-fastmcp-test",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "type": "module",
   "bin": {
-    "local-mcp-test": "./build/index.js"
+    "local-ts-fastmcp-test": "./build/index.js"
   },
   "scripts": {
     "build": "tsc && chmod 755 build/index.js",
@@ -18,7 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.12.1",
+    "fastmcp": "^3.0.0",
     "zod": "^3.25.56"
   },
   "devDependencies": {

@@ -1,44 +1,56 @@
 #!/usr/bin/env node
 
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { FastMCP } from "fastmcp";
 import { z } from "zod";
 
-const server = new McpServer({
-  name: "local-mcp-test",
+const server = new FastMCP({
+  name: "local-ts-fastmcp-test",
   version: "0.1.0",
 });
 
-server.tool(
-  "double_number",
-  "与えられた数値を2倍にする",
-  {num: z.number().describe("数値")},
-  ({num}) => ({content: [{type: "text", text: (num * 2).toString()}]}),
-);
+server.addTool({
+  name: "double_number",
+  description: "与えられた数値を2倍にする",
+  parameters: z.object({ num: z.number().describe("数値") }),
+  execute: async ({ num }) => ({
+    content: [{ type: "text", text: (num * 2).toString() }],
+  }),
+});
 
-server.tool(
-  "pick_random_string",
-  "文字列の配列からランダムに1つ選ぶ",
-  {
+server.addTool({
+  name: "pick_random_string",
+  description: "文字列の配列からランダムに1つ選ぶ",
+  parameters: z.object({
     items: z.array(z.string()).describe("文字列の配列"),
-  },
-  ({ items }) => {
+  }),
+  execute: async ({ items }) => {
     const choice = items[Math.floor(Math.random() * items.length)];
     return { content: [{ type: "text", text: choice }] };
   },
-);
+});
 
-server.tool(
-  "shuffle_and_group_strings",
-  "文字列の配列をシャッフルして指定された数のグループに分ける（グループ数 or 1グループの最大人数のどちらかを指定）",
-  {
+server.addTool({
+  name: "shuffle_and_group_strings",
+  description:
+    "文字列の配列をシャッフルして指定された数のグループに分ける（グループ数 or 1グループの最大人数のどちらかを指定）",
+  parameters: z.object({
     items: z.array(z.string()).describe("文字列の配列"),
-    groupCount: z.number().min(1).optional().describe("グループ数（指定する場合）"),
-    maxPerGroup: z.number().min(1).optional().describe("1グループの最大人数（指定する場合）"),
-  },
-  ({ items, groupCount, maxPerGroup }) => {
+    groupCount: z
+      .number()
+      .min(1)
+      .optional()
+      .describe("グループ数（指定する場合）"),
+    maxPerGroup: z
+      .number()
+      .min(1)
+      .optional()
+      .describe("1グループの最大人数（指定する場合）"),
+  }),
+  execute: async ({ items, groupCount, maxPerGroup }) => {
     if ((groupCount && maxPerGroup) || (!groupCount && !maxPerGroup)) {
-      throw new Error("グループ数か1グループの最大人数のどちらか1つだけを指定してください");
+      throw new Error(
+        "グループ数か1グループの最大人数のどちらか1つだけを指定してください"
+      );
     }
 
     const shuffled = [...items].sort(() => Math.random() - 0.5);
@@ -66,15 +78,8 @@ server.tool(
       })),
     };
   },
-);
+});
 
-async function main() {
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
-  console.error("Example MCP Server running on stdio");
-}
-
-main().catch((error) => {
-  console.error("Fatal error in main():", error);
-  process.exit(1);
+server.start({
+  transportType: "stdio",
 });
