@@ -9,6 +9,9 @@
   },
   "scripts": {
     "build": "tsc && chmod 755 build/index.js",
+    "build:api": "tsc --project tsconfig.api.json",
+    "start": "node build/index.js",
+    "start:api": "node api/server.js",
     "prepare": "npm run build"
   },
   "files": [
