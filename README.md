@@ -22,6 +22,9 @@ On Windows: `%APPDATA%/Claude/claude_desktop_config.json`
 }
 ```
 
+### 詰まっているポイント
+- VercelにAdapterが存在しないようなので、デプロイできない
+
 ## 参考サイト
 - [GitHub punkpeye/fastmcp](https://github.com/punkpeye/fastmcp)
 - [簡易な自作MCPサーバーをお試しで実装する方法](https://zenn.dev/smartround_dev/articles/02af1058e9f80f)
