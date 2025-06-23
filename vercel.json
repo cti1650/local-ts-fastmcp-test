@@ -1,9 +1,0 @@
-{
-  "version": 2,
-  "buildCommand": "tsc -p tsconfig.api.json",
-  "functions": {
-    "api/**/*.js": {
-      "runtime": "nodejs22.x"
-    }
-  }
-}
